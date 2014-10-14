@@ -1,0 +1,49 @@
+
+Do python libraries against Microsoft Excel actually work?
+
+xlrd +
+
+
+Names for functions.
+--------------------
+lift        - send data to the front
+ask       - send data back
+store, load - communicate with database
+
+
+
+
+Structure: Cell update log.
+--------------------
+type  - sorted set
+key   - (book+sheet)
+score - last update time
+value - (row+column)
+
+
+Structure: Book.
+--------------------
+???
+
+
+A cell is itself a structure with a log, that is, a list of cell objects plus states and dates.
+
+cell_memory -> list (cell)
+
+cell -> ( blob - Arbitrary cell value. Redis string.
+        , type - Excel type map.
+        , grammar - Validation function.
+        , date - Modification.
+        , state - reserved
+        , permissions - Bit field.
+        )
+    And how am I storing that in Redis?
+
+
+The process.
+--------------------
+
+A. On the client.
+    You may ask for 
+
+B. On the server.
