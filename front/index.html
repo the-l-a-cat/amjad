@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<title>CRM</title>
+<meta charset="windows-1251" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+
+<style>
+html {
+padding:0px;
+margin:0px;
+}
+body {
+padding:20px;
+margin:0px;
+font-family: 'Open Sans', sans-serif;
+font-size:12pt;
+background-color:#666;
+}
+
+.field {
+	width: 800px;
+	height: 300px;
+	background-color: #fff;
+	overflow: hidden;
+}
+.head_col {
+	float: right;
+	padding-top: 30px;
+	width: 30px;
+	height: 270px;
+	background-color: #ccc;
+}
+.rows {
+	float: right;
+	width: 770px;
+	height: 300px;
+	overflow-y: hidden;
+	overflow-x: scroll;
+}
+.head_row {
+	min-width: 770px;
+	height: 30px;
+	background-color: #ddd;
+}
+.cols {
+	min-width: 770px;
+	height: 270px;
+	white-space: nowrap;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+.col {
+	display: inline-block;
+	margin: 0px;
+	width: 100px;
+	height: auto;
+	border-right: 0px dotted #ccc;
+}
+.head_row_cell {
+	width: 100px;
+	height: 30px;
+	border-right: 1px dotted #999;
+}
+.head_col_cell {
+	width: 30px;
+	height: 30px;
+	border-bottom: 1px dotted #999;
+}
+.cell {
+	width: 100px;
+	height: 30px;
+	border-right: 1px dotted #ccc;
+	border-bottom: 1px dotted #ccc;
+}
+	.selected {
+		border-bottom: 1px solid #0096D5;
+		border-right: 1px solid #0096D5;
+	}
+</style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script type="text/javascript" src="js/jQuery.js"></script>
+  <script src="js/jquery.transit.min.js"></script>
+  <script src="js/jquery.scrollTo-1.4.3.1-min.js"></script>
+
+<script>
+//color:#0096D5;
+//color:#D7410B;
+//  $(window).scroll(function () {
+//  	if ($(this).scrollTop() > 0) {
+//		$("#layer_up").fadeOut("slow");
+//	} else {
+//		$("#layer_up").fadeIn("slow");
+//	};
+//  }); 
+
+
+$(document).ready(function () {
+
+$("body").scrollTo(0);
+
+
+
+
+
+var head_col_length = 10;
+var head_row_length = 10;
+
+$(".cols, .head_row").css({ 'width' : head_row_length*101+25 + 'px' });
+
+var insert_middle = "";
+for (var a=0; a<head_col_length; a++) {
+	insert_middle = insert_middle + "<div class='cell'></div>";
+}
+var insert = "<div class='col'>" + insert_middle + "</div>";
+
+
+for (var i=0; i<head_row_length; i++) {
+	$(".cols").append(insert);
+}
+
+
+for (var i=0; i<head_row_length; i++) {
+	$(".head_row").append("<div class='col'><div class='head_row_cell'></div></div>");
+}
+
+
+for (var i=0; i<head_col_length; i++) {
+	$(".head_col").append("<div class='head_col_cell'></div>");
+}
+
+
+
+   $(".cell").click(function(){
+   		$(".cell").removeClass("selected");
+		$(this).addClass("selected");
+   });
+
+var the_object;
+var http_request = new XMLHttpRequest();
+http_request.onreadystatechange = function () {
+    if ( http_request.readyState == 4 ) {
+        if ( http_request.status == 200 ) {
+            the_object = JSON.parse(http_request.responseText);
+        } else {
+            alert( "There was a problem with the URL." + http_request.status );
+        }
+        http_request = null;
+    }
+};
+http_request.open( "GET", '31.220.48.115:8102/api/A', true );
+http_request.send(null);
+
+
+});
+
+</script>
+</head>
+<body>
+
+<div class="field">
+	<div class="rows">
+		<div class="head_row">
+			
+		</div>
+		<div class="cols">
+			
+		</div>
+	</div>
+	<div class="head_col">
+
+	</div>
+</div>
+
+
+
+
+
+</body>
+</html>
