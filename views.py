@@ -17,11 +17,10 @@ def index(request):
 
 # def api(request, **kwargs):
 def api(request, *args):
-    # if kwargs['function_name'] == "a1":
-    #     return HttpResponse(lift(sheets(kwargs['function_args'])[0]))
-    # if args[0] == "a1":
-        # return HttpResponse (lift(sheets(os.path.join(settings.STATIC_ROOT, 'refmart.xlsx'))[0]))
-    return HttpResponse ("\n".join(["{", "'lalafa':'lalafa'", "}"]))
+    if args[0] == "a1":
+        return HttpResponse ("\n".join(["{", "'lala':'fa'", "}"]))
+    elif args[0] == "lift_sheet":
+        return HttpResponse (lift (sheets (os.path.join(settings.STATIC_ROOT, args[1]) )[int(args[2])]))
     # return HttpResponse('lalafa')
 
 def js(request, js):
