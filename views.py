@@ -8,7 +8,7 @@ from xls import sheets, lift
 
 
 def index(request):
-    template = loader.get_template('/srv/django/amjad/amjad/front/index.html')
+    template = loader.get_template('front/index.html')
     context = RequestContext (request)
 
     # return HttpResponse("Hello, kitty.")
@@ -20,7 +20,7 @@ def api(request, *args):
 def js(request, js):
     return HttpResponse (
             loader.get_template (
-                os.path.join ( '/srv/django/amjad/amjad/front/js'
+                os.path.join ( 'front/js'
                              , js)
                                 ) . render (RequestContext (request))
                         )
