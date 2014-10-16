@@ -115,6 +115,22 @@ http_request.onreadystatechange = function () {
             alert(head_col_length + " * " + head_row_length);
             var row_l = the_object["cell_values"].length;
             alert(row_l);
+
+            //Рисуем табличку
+
+			$(".rows").css({ 'width' : window.innerWidth-40 + 'px' });
+			$(".field").css({ 'width' : window.innerWidth-40 + 'px' });
+			$(".cols").css({ 'width' : head_row_length*101+25 + 'px' });
+
+			var insert_middle = "";
+			for (var a=0; a<head_col_length; a++) {
+				insert_middle = insert_middle + "<div class='cell'></div>";
+			}
+			var insert = "<div class='col'>" + insert_middle + "</div>";
+
+			for (var i=0; i<head_row_length; i++) {
+				$(".cols").append(insert);
+			}
         } else {
             alert( "There was a problem with the URL." + http_request.status );
         }
@@ -124,23 +140,6 @@ http_request.onreadystatechange = function () {
 http_request.open( "GET", '/api/lift_sheet/refmart-100.xlsx/0', true );
 http_request.send(null);
 
-
-
-//Рисуем табличку
-
-$(".rows").css({ 'width' : window.innerWidth-40 + 'px' });
-$(".field").css({ 'width' : window.innerWidth-40 + 'px' });
-$(".cols").css({ 'width' : head_row_length*101+25 + 'px' });
-
-var insert_middle = "";
-for (var a=0; a<head_col_length; a++) {
-	insert_middle = insert_middle + "<div class='cell'></div>";
-}
-var insert = "<div class='col'>" + insert_middle + "</div>";
-
-for (var i=0; i<head_row_length; i++) {
-	$(".cols").append(insert);
-}
 
 
 //Эффект по клику на ячейку
