@@ -29,7 +29,7 @@ background-color:#666;
 	float: right;
 	padding-top: 30px;
 	width: 30px;
-	height: 270px;
+	height: 300px;
 	background-color: #ccc;
 }
 .rows {
@@ -46,7 +46,7 @@ background-color:#666;
 }
 .cols {
 	min-width: 770px;
-	height: 270px;
+	height: 300px;
 	white-space: nowrap;
 	overflow-x: hidden;
 	overflow-y: scroll;
@@ -81,6 +81,36 @@ background-color:#666;
 		border-bottom: 1px solid #0096D5;
 		border-right: 1px solid #0096D5;
 	}
+
+#lockscreen {
+position:fixed;
+top:0px;
+left:0px;
+width:100%;
+height: 100%;
+background-color: #fff;
+text-align: center;
+}
+ #lockscreen > input {
+ 	margin:100px;
+ 	margin-bottom:20px;
+ 	width:300px;
+ 	height:40px;
+ 	font-size:18pt;
+ 	border:1px solid #ccc;
+ }
+ #submitter {
+ 	display:inline-block;
+width:300px;
+height: 50px;
+background-color: green;
+color:#fff;
+border-radius:10px;
+text-align:center;
+font-size:24pt;
+font-weight:bold;
+cursor:pointer;
+ }
 </style>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script type="text/javascript" src="js/jQuery.js"></script>
@@ -110,27 +140,47 @@ http_request.onreadystatechange = function () {
     if ( http_request.readyState == 4 ) {
         if ( http_request.status == 200 ) {
             the_object = JSON.parse(http_request.responseText);
+            // the_mirror = [] we should need to quickly make an inverse matrix
             var head_col_length = the_object["metadata"]["dimensions"]["ncols"];
             var head_row_length = the_object["metadata"]["dimensions"]["nrows"];
-            alert(head_col_length + " * " + head_row_length);
-            var row_l = the_object["cell_values"].length;
-            alert(row_l);
+            //alert(head_col_length + " * " + head_row_length);
 
             //Рисуем табличку
-
+            $(".field, .cols, .rows").css({ 'height' : window.innerHeight-40 + 'px' });
 			$(".rows").css({ 'width' : window.innerWidth-40 + 'px' });
 			$(".field").css({ 'width' : window.innerWidth-40 + 'px' });
-			$(".cols").css({ 'width' : head_row_length*101+25 + 'px' });
+			$(".cols").css({ 'width' : head_col_length*101+25 + 'px' });
 
-			var insert_middle = "";
-			for (var a=0; a<head_col_length; a++) {
-				insert_middle = insert_middle + "<div class='cell'></div>";
-			}
-			var insert = "<div class='col'>" + insert_middle + "</div>";
 
-			for (var i=0; i<head_row_length; i++) {
-				$(".cols").append(insert);
+			//var insert_middle = "";
+			//for (var a=0; a<head_col_length; a++) {
+			//	insert_middle = insert_middle + "<div class='cell'></div>";
+			//}
+			//var insert = "<div class='col'>" + insert_middle + "</div>";
+
+			//for (var i=0; i<head_row_length; i++) {
+			//	$(".cols").append(insert);
+			//}
+
+			var cols_html = "";
+			for (var col=0; col<the_object["metadata"]["dimensions"]["ncols"]; col++) {
+				var cells_html = "";
+				// create an empty column with id = f(col)
+				for (var row=0; row<the_object["metadata"]["dimensions"]["nrows"]; row++) {
+				// insert an object into a column with id = f(col)
+				cells_html = cells_html + "<div class='cell'>" + the_object['cell_values'][row][col] + "</div>";
+
+				}
+				cols_html = cols_html + "<div id='col" + col + "' class='col'>" + cells_html + "</div>";
+
 			}
+			$(".cols").append(cols_html);
+
+	var selector = $(".col");
+		for (var i=0; i<56; i=i+2) {
+			selector[i].style.backgroundColor = "#eee";
+		} 
+
         } else {
             alert( "There was a problem with the URL." + http_request.status );
         }
@@ -148,11 +198,37 @@ http_request.send(null);
 		$(this).addClass("selected");
    });
 
+   $("#submitter").click(function(){
+   		if (document.getElementById("username").value == "" ) {
+		document.getElementById("lockscreen").style.display = "none";
+		} else if (document.getElementById("username").value == "kayats" ) {
+		document.getElementById("lockscreen").style.display = "none";
+		var selector = $(".col");
+		for (var i=0; i<56; i=i+2) {
+			selector[i].style.display = "none";
+		}
+   		} else if (document.getElementById("username").value == "rachpille" ) {
+		document.getElementById("lockscreen").style.display = "none";
+		var selector = $(".col");
+		for (var i=1; i<56; i=i+2) {
+			selector[i].style.display = "none";
+		}
+   		} else {
+   				alert("There is no such user");
+   		}
+   });
+
 });
 
 </script>
 </head>
 <body>
+
+<div id=lockscreen>
+	<input id=username placeholder="Username"></input><br>
+	<div id=submitter>OK</div>
+
+</div>
 
 <div class="field">
 	<div class="rows">
