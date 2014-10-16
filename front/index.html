@@ -69,10 +69,13 @@ background-color:#666;
 	border-bottom: 1px dotted #999;
 }
 .cell {
-	width: 100px;
-	height: 30px;
+	width: 96px;
+	height: 26px;
+	padding: 2px;
 	border-right: 1px dotted #ccc;
 	border-bottom: 1px dotted #ccc;
+	overflow: hidden;
+	font-size: 8pt;
 }
 	.selected {
 		border-bottom: 1px solid #0096D5;
@@ -100,12 +103,30 @@ $(document).ready(function () {
 
 $("body").scrollTo(0);
 
+//Получаем данные
+var the_object;
+var http_request = new XMLHttpRequest();
+http_request.onreadystatechange = function () {
+    if ( http_request.readyState == 4 ) {
+        if ( http_request.status == 200 ) {
+            the_object = JSON.parse(http_request.responseText);
+            var head_col_length = the_object["metadata"]["dimensions"]["ncols"];
+            var head_row_length = the_object["metadata"]["dimensions"]["nrows"];
+            alert(head_col_length + " * " + head_row_length);
+            var row_l = the_object["cell_values"].length;
+            alert(row_l);
+        } else {
+            alert( "There was a problem with the URL." + http_request.status );
+        }
+        http_request = null;
+    }
+};
+http_request.open( "GET", '/api/lift_sheet/refmart.xlsx/0', true );
+http_request.send(null);
 
 
 
-
-var head_col_length = 10;
-var head_row_length = 10;
+//Рисуем табличку
 
 $(".rows").css({ 'width' : window.innerWidth-40 + 'px' });
 $(".field").css({ 'width' : window.innerWidth-40 + 'px' });
@@ -117,43 +138,16 @@ for (var a=0; a<head_col_length; a++) {
 }
 var insert = "<div class='col'>" + insert_middle + "</div>";
 
-
 for (var i=0; i<head_row_length; i++) {
 	$(".cols").append(insert);
 }
 
 
-//for (var i=0; i<head_row_length; i++) {
-//	$(".head_row").append("<div class='col'><div class='head_row_cell'></div></div>");
-//}
-
-
-//for (var i=0; i<head_col_length; i++) {
-//	$(".head_col").append("<div class='head_col_cell'></div>");
-//}
-
-
-
+//Эффект по клику на ячейку
    $(".cell").click(function(){
    		$(".cell").removeClass("selected");
 		$(this).addClass("selected");
    });
-
-var the_object;
-var http_request = new XMLHttpRequest();
-http_request.onreadystatechange = function () {
-    if ( http_request.readyState == 4 ) {
-        if ( http_request.status == 200 ) {
-            the_object = JSON.parse(http_request.responseText);
-            alert(the_object["metadata"]["dimensions"]["0"]);
-        } else {
-            alert( "There was a problem with the URL." + http_request.status );
-        }
-        http_request = null;
-    }
-};
-http_request.open( "GET", '/api/lift_sheet/refmart.xlsx/0', true );
-http_request.send(null);
 
 });
 
