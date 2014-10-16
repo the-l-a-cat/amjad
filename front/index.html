@@ -109,7 +109,8 @@ var head_row_length = 10;
 
 $(".rows").css({ 'width' : window.innerWidth-70 + 'px' });
 $(".field").css({ 'width' : window.innerWidth-40 + 'px' });
-$(".cols, .head_row").css({ 'width' : head_row_length*101+25 + 'px' });
+$(".head_row").css({ 'minWidth' : window.innerWidth-70  + 'px' });
+$(".cols .head_row").css({ 'width' : head_row_length*101+25 + 'px' });
 
 var insert_middle = "";
 for (var a=0; a<head_col_length; a++) {
