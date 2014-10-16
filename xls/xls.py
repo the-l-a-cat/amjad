@@ -57,7 +57,7 @@ def select_rows(table, columns):
     return [ [ row[column] for column in columns ] for row in table ]
 
 def serialize(object_):
-    return ( json.dumps ( object_, ensure_ascii=False ) )
+    return ( json.dumps ( object_, ensure_ascii=False, indent=4 ) )
 
 def serial_write(object_, filename):
     codecs.open (filename, 'w', 'utf8') . write(serialize(object_))

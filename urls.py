@@ -10,6 +10,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/(.*)', views.api),
+    url(r'^api/(.*)/(.*)', views.api),
+    # url(r'^api/(?P<function_name>.*)/(?P<function_args>.*)', views.api),
     url(r'^js/(.*\.js)', views.js),
     url('', views.index),
 )
