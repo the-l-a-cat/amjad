@@ -109,9 +109,6 @@ var head_row_length = 10;
 
 $(".cols, .head_row").css({ 'width' : head_row_length*101+25 + 'px' });
 
-$(".rows, .head_row").css({ 'width' : window.innerWidth-70 + 'px' });
-$(".field").css({ 'width' : window.innerWidth-40 + 'px' });
-
 var insert_middle = "";
 for (var a=0; a<head_col_length; a++) {
 	insert_middle = insert_middle + "<div class='cell'></div>";
@@ -145,9 +142,8 @@ var http_request = new XMLHttpRequest();
 http_request.onreadystatechange = function () {
     if ( http_request.readyState == 4 ) {
         if ( http_request.status == 200 ) {
-            alert(http_request.responseText);
-            //the_object = JSON.parse(http_request.responseText);
-            //alert(the_object);
+            the_object = JSON.parse(http_request.responseText);
+            alert(the_object);
         } else {
             alert( "There was a problem with the URL." + http_request.status );
         }
