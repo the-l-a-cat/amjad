@@ -145,7 +145,7 @@ http_request.onreadystatechange = function () {
     if ( http_request.readyState == 4 ) {
         if ( http_request.status == 200 ) {
             the_object = JSON.parse(http_request.responseText);
-            alert(the_object);
+            alert(the_object["cell_values"][0][0]);
         } else {
             alert( "There was a problem with the URL." + http_request.status );
         }
