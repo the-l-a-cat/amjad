@@ -107,10 +107,9 @@ $("body").scrollTo(0);
 var head_col_length = 10;
 var head_row_length = 10;
 
-$(".rows").css({ 'width' : window.innerWidth-70 + 'px' });
+$(".rows").css({ 'width' : window.innerWidth-40 + 'px' });
 $(".field").css({ 'width' : window.innerWidth-40 + 'px' });
-$(".head_row").css({ 'minWidth' : window.innerWidth-70  + 'px' });
-$(".cols .head_row").css({ 'width' : head_row_length*101+25 + 'px' });
+$(".cols").css({ 'width' : head_row_length*101+25 + 'px' });
 
 var insert_middle = "";
 for (var a=0; a<head_col_length; a++) {
@@ -165,16 +164,16 @@ http_request.send(null);
 
 <div class="field">
 	<div class="rows">
-		<div class="head_row">
+		<!--<div class="head_row">
 			
-		</div>
+		</div>-->
 		<div class="cols">
 			
 		</div>
 	</div>
-	<div class="head_col">
+	<!--<div class="head_col">
 
-	</div>
+	</div>-->
 </div>
 
 
